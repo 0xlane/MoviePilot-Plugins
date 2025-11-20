@@ -17,7 +17,7 @@ class ChatGPTOptimized(_PluginBase):
     # 插件图标
     plugin_icon = "Chatgpt_A.png"
     # 插件版本
-    plugin_version = "2.1.8.2"
+    plugin_version = "2.1.8.3"
     # 插件作者
     plugin_author = "reinject"
     # 作者主页
@@ -441,7 +441,8 @@ class ChatGPTOptimized(_PluginBase):
         if not event.event_data:
             return
         title = event.event_data.get("title")
-        if not title:
+        if not title or len(title) < 5:
+            logger.info(f"标题：{title}，长度小于5，不进行ChatGPT识别")
             return
 
         # 尝试获取媒体名称，失败时切换API密钥

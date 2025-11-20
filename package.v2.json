@@ -3,11 +3,12 @@
     "name": "ChatGPTOptimized",
     "description": "消息交互支持与ChatGPT对话。相比原插件，调低了优先级，避免浪费不必要的token。",
     "labels": "消息通知,识别",
-    "version": "2.1.8.2",
+    "version": "2.1.8.3",
     "icon": "Chatgpt_A.png",
     "author": "reinject",
     "level": 1,
     "history": {
+      "v2.1.8.3": "标题长度小于5不进行识别",
       "v2.1.8.2": "日志打印、消息通知添加标题信息",
       "v2.1.8.1": "调低了优先级，避免浪费不必要的token",
       "v2.1.8": "修复 OpenAI API >=1.0.0 兼容性问题",
