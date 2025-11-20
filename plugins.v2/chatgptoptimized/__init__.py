@@ -13,11 +13,11 @@ class ChatGPTOptimized(_PluginBase):
     # 插件名称
     plugin_name = "ChatGPTOptimized"
     # 插件描述
-    plugin_desc = "大模型对话与媒体识别增强。相比原插件，调低了优先级，避免浪费不必要的token。"
+    plugin_desc = "消息交互支持与ChatGPT对话。相比原插件，调低了优先级，避免浪费不必要的token。"
     # 插件图标
     plugin_icon = "Chatgpt_A.png"
     # 插件版本
-    plugin_version = "2.1.8.1"
+    plugin_version = "2.1.8.2"
     # 插件作者
     plugin_author = "reinject"
     # 作者主页
@@ -450,7 +450,7 @@ class ChatGPTOptimized(_PluginBase):
 
         while retry_count < max_retries:
             response = self.openai.get_media_name(filename=title)
-            logger.info(f"ChatGPT返回结果：{response}")
+            logger.info(f"标题：{title}，ChatGPT识别结果：{response}")
 
             # 判断响应是否正常
             is_error, error_msg = self.is_api_error(response)
@@ -458,7 +458,7 @@ class ChatGPTOptimized(_PluginBase):
             # 如果不是错误但返回字典中没有name字段，也视为错误
             if not is_error and isinstance(response, dict) and not response.get("name"):
                 is_error = True
-                error_msg = "未返回有效识别结果"
+                error_msg = f"标题 {title} 未返回有效识别结果"
 
             if is_error:
                 # 发生错误，尝试切换密钥
@@ -467,7 +467,7 @@ class ChatGPTOptimized(_PluginBase):
 
                 # 发送密钥失效通知 (通过系统通知，因为这里没有用户交互)
                 if self._notify:
-                    message = f"API密钥 {current_key} 调用失败: {error_msg}"
+                    message = f"API密钥 {current_key} 调用失败: {error_msg}，标题：{title}"
                     self.post_message(mtype=NotificationType.Plugin, title="ChatGpt", text=message)
 
                     # 如果所有密钥都失效，发送额外通知
